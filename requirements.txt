@@ -2,3 +2,4 @@ streamlit
 pandas
 plotly
 nmrglue @ git+https://github.com/jjhelmus/nmrglue.git
+kaleido==0.2.1
