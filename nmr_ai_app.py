@@ -658,8 +658,8 @@ if data_dict:
     if st.button("🖼️ コピー用画像を表示 (右クリックでコピーできます)", use_container_width=True):
         with st.spinner("画像を生成中..."):
             try:
-                # pngとして画像データを取得
-                img_bytes = fig.to_image(format="png", width=export_width, height=export_height)
+                # pngとして画像データを取得 (scale=3で高画質化)
+                img_bytes = fig.to_image(format="png", width=export_width, height=export_height, scale=3)
                 st.success("✅ 画像の生成が完了しました！下の画像を **右クリックして「画像をコピー」** を選択してください。")
 
                 # コンテナの幅に合わせて画像を表示
