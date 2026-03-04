@@ -498,7 +498,7 @@ if data_dict:
                 x=x_data,
                 y=y_data,
                 mode='lines',
-                line_shape='spline',
+                line_shape='linear',
                 name=mapped_series_name,
                 line=dict(color=settings['color'], width=1.5),
                 cliponaxis=True,
