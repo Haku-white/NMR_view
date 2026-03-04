@@ -128,8 +128,13 @@ def parse_nmr_file(file_content, filename, apply_fft=False):
             else:
                 intensity = data
 
-            uc = ng.fileiobase.uc_from_udic(udic)
-            ppm_scale = uc.ppm_scale()
+            if 'header' in dic and 'data_axis_start' in dic['header'] and 'data_axis_stop' in dic['header']:
+                start_ppm = dic['header']['data_axis_start'][0]
+                stop_ppm = dic['header']['data_axis_stop'][0]
+                ppm_scale = np.linspace(start_ppm, stop_ppm, len(intensity))
+            else:
+                uc = ng.fileiobase.uc_from_udic(udic)
+                ppm_scale = uc.ppm_scale()
 
         df = pd.DataFrame({
             "Chemical Shift [ppm]": ppm_scale,
