@@ -655,42 +655,15 @@ if data_dict:
     st.plotly_chart(fig, use_container_width=True, config=config)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("📋 グラフ画像をクリップボードにコピー (PNG)", use_container_width=True):
-        import subprocess
-        import tempfile
-        import os
-
+    if st.button("🖼️ コピー用画像を表示 (右クリックでコピーできます)", use_container_width=True):
         with st.spinner("画像を生成中..."):
             try:
                 # pngとして画像データを取得
                 img_bytes = fig.to_image(format="png", width=export_width, height=export_height)
+                st.success("✅ 画像の生成が完了しました！下の画像を **右クリックして「画像をコピー」** を選択してください。")
 
-                # 一時ファイルに保存
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-                    tmp.write(img_bytes)
-                    tmp_path = tmp.name
-
-                # PowerShellを使ってクリップボードに画像をセット
-                ps_script = f"""
-                Add-Type -AssemblyName System.Windows.Forms;
-                Add-Type -AssemblyName System.Drawing;
-                $img = [System.Drawing.Image]::FromFile('{tmp_path}');
-                [System.Windows.Forms.Clipboard]::SetImage($img);
-                $img.Dispose();
-                """
-
-                result = subprocess.run(["powershell", "-Command", ps_script], capture_output=True, text=True)
-
-                if result.returncode == 0:
-                    st.success("✅ グラフ画像をクリップボードにコピーしました！ (Ctrl+Vで貼り付けできます)")
-                else:
-                    st.error(f"クリップボードへのコピーに失敗しました: {result.stderr}")
-
-                # 一時ファイルの削除
-                try:
-                    os.remove(tmp_path)
-                except:
-                    pass
+                # コンテナの幅に合わせて画像を表示
+                st.image(img_bytes, use_container_width=True)
 
             except Exception as e:
                 err_msg = str(e).lower()
