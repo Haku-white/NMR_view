@@ -1,0 +1,4 @@
+streamlit
+pandas
+plotly
+nmrglue @ git+https://github.com/jjhelmus/nmrglue.git
